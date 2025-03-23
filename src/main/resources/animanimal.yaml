@@ -1,0 +1,44 @@
+openapi: 3.1.1
+info:
+  description: "Animanimal spec"
+  version: "v1"
+  title: "Animanimal"
+paths:
+  /getMyCockerSpaniel:
+    post:
+      summary: "get my Cocker Spaniel"
+      responses:
+        '200':
+          description: "a Cocker Spaniel"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CockerSpaniel'
+components:
+  schemas:
+    Pet:
+      type: object
+      discriminator:
+        propertyName: petType
+      properties:
+        petType:
+          type: string
+      required:
+        - petType
+    Dog:
+      description: A representation of a dog
+      allOf:
+        - $ref: '#/components/schemas/Pet'
+        - type: object
+          properties:
+            packSize:
+              type: integer
+              format: int32
+    CockerSpaniel:
+      description: A representation of a Cocker Spaniel dog
+      allOf:
+        - $ref: '#/components/schemas/Dog'
+        - type: object
+          properties:
+            earLength:
+              type: integer
